@@ -15,8 +15,4 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/mi_primer_ruta', function() {
-    return 'Hellow World';
-});
-
 Route::resource('trainers', 'TrainerController');
