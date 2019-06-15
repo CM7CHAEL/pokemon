@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\trainer;
 use Illuminate\Http\Request;
 
 class TrainerController extends Controller
@@ -13,7 +14,8 @@ class TrainerController extends Controller
      */
     public function index()
     {
-        return 'Hola pRu';
+        $trainers = trainer::all();
+        return view('trainer.index', compact('trainers'));
     }
 
     /**
@@ -23,7 +25,7 @@ class TrainerController extends Controller
      */
     public function create()
     {
-        //
+        return view('trainer.create');
     }
 
     /**
@@ -34,7 +36,17 @@ class TrainerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if ($request->hasFile('avatar')) {
+            $file = $request->file('avatar');
+            $name = time().$file->getClientOriginalName();
+            $file->move(public_path().'/images', $name);
+        }
+        $trainer = new trainer();
+        $trainer-> name = $request->input('name');
+        $trainer-> avatar = $name;
+        $trainer-> description = $request->input('description');
+        $trainer->save();
+        return 'Registro guardado';
     }
 
     /**
