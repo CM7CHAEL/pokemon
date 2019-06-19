@@ -55,9 +55,11 @@ class TrainerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Trainer $trainer)
+    // public function show($slug)
     {
-        //
+        // $trainer = trainer::where('slug', '=', $slug)->firstOrFail();
+        return view('trainer.show', compact('trainer'));
     }
 
     /**
@@ -66,9 +68,9 @@ class TrainerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Trainer $trainer)
     {
-        //
+        return view('trainer.edit', compact('trainer'));
     }
 
     /**
@@ -78,9 +80,12 @@ class TrainerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Trainer $trainer)
     {
-        //
+        // return $trainer;
+        $trainer->fill($request->all());
+        $trainer->save();
+        return 'Actualizado';
     }
 
     /**
